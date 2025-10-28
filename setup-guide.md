@@ -51,6 +51,8 @@ The following configuration steps are specific to the components described in th
 
 ---
 
+![WLED Menu Screenshot](./images/LR.light_WLED_Menu.png)
+
 ### Step 1: LED Preferences
 
 Go to:  
@@ -65,8 +67,6 @@ Under **Hardware setup – LED outputs**, set:
 - **Auto-calculate white channel from RGB:** `None` *(leave disabled)*
 
 Leave all other options as they are.
-
-📸 *[Insert screenshot of LED output settings]*
 
 ---
 
@@ -88,8 +88,9 @@ In the **Transitions** section:
 > WLED’s default settings use transition fades between color changes, which introduces latency.  
 > For LR.light, we want lights to respond **instantly** to each RGBW frame. Set this to zero for real-time control.
 
-📸 *[Insert screenshot of transition settings]*
-
+![WLED LED Preferences Screenshot](./images/LR.light_LED_Preferences1.png)
+![WLED LED Preferences Screenshot](./images/LR.light_LED_Preferences2.png)
+![WLED LED Preferences Screenshot](./images/LR.light_LED_Preferences3.png)
 ---
 
 ### Step 4: Wi-Fi Setup
@@ -110,7 +111,7 @@ Set the following:
   - `wled1.local`
   - `costume1.local`
 
-📸 *[Insert screenshot of Wi-Fi Setup screen]*
+![WLED WiFi Setup Screenshot](./images/LR.light_WLED_WiFiSetup.png)
 
 ---
 
@@ -127,7 +128,7 @@ Here you’ll see the color picker and brightness controls.
 > The WLED default is an **orange glow** — which we don’t want in a performance context.  
 > By setting Preset 1 to **black/off**, the fixture will turn off silently rather than showing an unintended color.
 
-📸 *[Insert screenshot of Preset 1 being saved]*
+![WLED_ControlUI Screenshot](./images/LR.light_WLED_ControlUI.png)
 
 ---
 
