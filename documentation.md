@@ -1,5 +1,3 @@
-
-
 # Documentation
 
 ## Overview
@@ -27,6 +25,8 @@ LR.light was developed out of a personal need: to realize an artistic vision in 
 > **WLED** is “a fast and feature-rich implementation of an ESP32/ESP8266 web server to control NeoPixel (WS2812B, WS2811, SK6812) LEDs, as well as SPI-based chipsets like the WS2801 and APA102!”
 
 It uses a custom **Max for Live** device to send RGBW data via **UDP** to LEDs connected to **ESP32** modules running the WLED firmware. This allows direct control of lighting from within Ableton Live using familiar workflows like MIDI mapping and automation lanes.
+
+---
 
 ## System Components
 
@@ -60,19 +60,24 @@ LR.light consists of a small number of open and widely available hardware and so
 
 > In practice, the system has been tested with up to 8 simultaneous ESP32 receivers, each with a dedicated Max for Live device. Higher numbers may be possible, but stability is not guaranteed beyond this.
 
+---
 
 ## Addressing & Fixture Mapping
 
-Each LR.light fixture (ESP32 + LED strip) is assigned a fixed IP address within the local network. This address is used to route lighting data from the Max for Live device directly to the correct receiver via **UDP**.
+Each LR.light fixture (ESP32 + LED strip) is assigned a unique **mDNS hostname** (e.g. `wled0.local`) within the local network.  
+This address is used to route lighting data from the Max for Live device directly to the correct receiver via **UDP**, avoiding the need for static IPs or DHCP reservations.
 
 ### Addressing via `sadam.udpSender`
 
 The Max for Live device uses an external object called [`sadam.udpSender`](http://www.sadam.hu/en/software) by Ádám Siska. Unlike Max/MSP’s native `udpsend`, this object allows **raw data transmission** (non-OSC) — required for sending RGBW streams directly to WLED.
 
-In the Max patch, the UDP address of each fixture is **hardcoded as an argument** within its `sadam.udpSender` instance.  
-The **same IP address** must be assigned to the corresponding fixture in the **WLED web interface** under **Wi-Fi setup**.
+In the Max patch, the UDP address of each fixture is **set using a hostname**, e.g. `wled0.local`, passed as an argument to the `sadam.udpSender` object.  
+This hostname is defined in the **WLED web interface**, under **Wi-Fi Setup → mDNS address**.
 
-> 📌 For stability, it is recommended to use static IPs within the router or assign them directly in WLED.
+It must match exactly between the Max for Live device and the WLED configuration.
+
+> 📌 Hostnames should be short, lowercase, and contain no spaces.  
+> Good examples: `wled0.local`, `fixture1.local`, `costumeL`. Bad examples: `My Fixture`, `wled.local!`
 
 ---
 
@@ -87,7 +92,7 @@ By default, the device includes entries for up to **8 fixtures**. To support mor
 1. Open the Max for Live device in edit mode.
 2. Add new fixture addresses to the dropdown logic (instructions included as comments in the patch).
 
-Each fixture should be **physically labeled** with its assigned number or name to avoid confusion, since the UDP address is hardcoded into each ESP32’s firmware configuration.
+Each fixture should be **physically labeled** with its assigned hostname to avoid confusion, since the UDP address is hardcoded into the Max patch.
 
 ---
 
@@ -95,8 +100,9 @@ Each fixture should be **physically labeled** with its assigned number or name t
 
 - Make sure each Max for Live instance **only targets one fixture**, and that every fixture has a matching device in Live.
 - If a Max for Live device is active but no corresponding ESP32 is online, **Ableton Live may crash** due to unresolved UDP routing.
-- Keep a record of fixture IPs and names. Assign static IPs Manually in WLED.
+- Clearly label each fixture with its assigned mDNS hostname (e.g. `wled0.local`) so you can easily match hardware to its corresponding Max device.
 
+---
 
 ## Limitations & Design Choices
 
@@ -105,7 +111,7 @@ LR.light is a flexible and modular system, but it is not a commercial product �
 ### Current Limitations
 
 - **Not plug-and-play**  
-  LR.light requires users to configure IP addresses, flash firmware, and manually map devices. Some technical literacy is required to set up, maintain, and extend the system.
+  LR.light requires users to configure mDNS hostnames, flash firmware, and manually map devices. Some technical literacy is required to set up, maintain, and extend the system.
 
 - **No per-pixel control (yet)**  
   The current Max for Live device sends a single RGBW value per fixture. This value is applied uniformly to the entire LED strip.  
@@ -118,7 +124,7 @@ LR.light is a flexible and modular system, but it is not a commercial product �
   The system has been tested with up to 8 simultaneous receivers. It may support more, but performance and stability at larger scales have not been tested.
 
 - **Ableton Live may crash if misconfigured**  
-  If a Max for Live device sends data to an unreachable IP (i.e., no active ESP32 receiver), Ableton Live may become unstable or crash. Proper mapping is critical.
+  If a Max for Live device sends data to an unreachable address (i.e., no active ESP32 receiver), Ableton Live may become unstable or crash. Proper mapping is critical.
 
 ---
 
@@ -131,13 +137,13 @@ LR.light is a flexible and modular system, but it is not a commercial product �
   LR.light was built out of a need to streamline light control in performance settings without the cost and rigidity of commercial wireless lighting systems. It favors flexibility and openness over polished user experience.
 
 - **Local-only networking**  
-  The system assumes a local Wi-Fi router with static IPs. This avoids latency, interference, and dependency on venue networks, which are often unreliable or locked down.
+  The system assumes a local Wi-Fi router and communicates via mDNS hostnames rather than static IPs.  
+  This avoids latency, interference, and dependency on venue networks, which are often unreliable or locked down.
 
 - **Modular and hackable**  
   The entire system is open for modification. Users comfortable with Max, WLED, or ESP32 firmware can extend the functionality as needed. No proprietary components or closed-source binaries are used.
 
 > LR.light is intentionally lean, minimal, and adaptable — but it rewards curiosity, experimentation, and a DIY mindset.
-
 
 ---
 
@@ -152,6 +158,8 @@ You can design your own fixture shapes, tweak the Max patch, or extend the code 
 This kind of bespoke integration is only possible with systems that are both open and modular.
 
 > If you're here to experiment, shape your own workflows, and make the tool your own — have fun. That's what LR.light is made for.
+
+---
 
 ## Compatibility
 
@@ -179,13 +187,13 @@ This kind of bespoke integration is only possible with systems that are both ope
 
 ### Network Requirements
 - Requires a **dedicated Wi-Fi router**
-- Fixtures must be assigned **static IP addresses**
+- Fixtures are addressed via **mDNS hostnames** (e.g. `wled0.local`)
 - All communication happens over **local UDP**
-
----
 
 > ⚠️ This system is not designed for use over public or venue-managed Wi-Fi networks.  
 > For stable performance, always use your own router and isolate the lighting network from other traffic.
+
+---
 
 ## Conceptual Notes & Use Cases
 
@@ -219,5 +227,3 @@ Some directions the system naturally supports:
 One idea I plan to explore is **sewing addressable LEDs into stage costumes**, turning the performer into a live-mapped light source, fully integrated into the musical and visual score. LR.light makes this kind of experimentation possible — not because it prescribes it, but because it *allows* it.
 
 > This system is not just about controlling lights. It's about rethinking what a lighting instrument can be.
-
-
