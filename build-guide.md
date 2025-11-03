@@ -27,7 +27,7 @@
 
 ## Section 1 – Preparing the Housing
 
-![Image of Lichtleiste](./images/LR.light_fixture_housing.webp)
+![Image of Lichtleiste](./images/LR.light_fixture_Housing.webp)
 [Source: OBI](https://www.obi.de/p/5191838/led-komplett-lichtleiste-1-x-20-w-laenge-123-cm)
 
 
@@ -79,7 +79,9 @@ Flash your **Mini NodeMCU (ESP8266MOD 12-F)** with the [WLED firmware](https://k
 
 ### Step 2: Solder the Connections
 
-Follow the [wiring diagram](./images/LR.light_wiring_diagram.png). You’ll need to:
+Follow the wiring diagram ![wiring diagram](./images/LR.light_wiring_diagram.png). 
+
+You’ll need to:
 
 - Connect **D4 (GPIO2)** → **DIN on LED strip**
 - Connect **GND** → **GND on LED strip and power**
