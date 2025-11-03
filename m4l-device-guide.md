@@ -57,7 +57,7 @@ Below the RGBW dials, you’ll find controls for **UDP refresh rate**:
   Default is `5000ms` (5 seconds).  
   This reduces network load and processing when nothing is changing.
 
-> The device automatically switches to **MAX refresh rate** after **0.5 seconds of inactivity** (no user input).  
+> The device automatically switches to **MAX refresh rate** after **1 second of inactivity** (no user input).  
 > This helps avoid bandwidth overload — especially with multiple fixtures and high-resolution LED strips (e.g. 144 RGBW LEDs = 576 values per update, per fixture).
 
 ---
