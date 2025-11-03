@@ -39,7 +39,7 @@ To open:
 - Press in the **pin** on the underside of the end caps
 - Pull off the caps
 
-![Image of end cap mechanism](./images/LR.light_endcap_pin.HEIC)
+![Image of end cap mechanism](./images/LR.light_endcap_pin.png)
 
 ### Step 2: Remove the Diffusion Layer
 
@@ -118,7 +118,7 @@ Slide the diffuser back onto the housing — it should hook in securely.
 Push the end caps back on.  
 They will be held by friction — no glue required — which is practical in case you need to access the internals again later.
 
-![Image of finished fixture](./images/LR.light_fixture_back.heic)
+![Image of finished fixture](./images/LR.light_fixture_back.png)
 
 ---
 
