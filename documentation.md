@@ -41,12 +41,12 @@ LR.light consists of a small number of open and widely available hardware and so
   - **4× AA NiMH rechargeable batteries**, for mobile or installation contexts.
 - A **dedicated Wi-Fi router** is used to create a private local network for low-latency and stable communication between Ableton Live and the ESP32 modules. Public or venue networks are not recommended.
 
-> **Note:** A detailed list of tested components and wiring instructions can be found in the [Build Guide](./build-guide.md). *(link placeholder)*
+> **Note:** A detailed list of tested components and wiring instructions can be found in the [Build Guide](./build-guide.md).
 
 ### Software
 
 - The ESP32 modules run **WLED**, used in its standard form without modification.
-- Initial configuration (Wi-Fi setup, LED settings, naming) is done via the **WLED web interface**. See the [Installation & Configuration Guide](./setup-guide.md) for details. *(link placeholder)*
+- Initial configuration (Wi-Fi setup, LED settings, naming) is done via the **WLED web interface**. See the [Installation & Configuration Guide](./setup-guide.md) for details. 
 - The **Max for Live device** is custom-built for LR.light and included in this repository.  
   It sends UDP packets to one or more WLED fixtures. Each instance of the device must be matched to a specific fixture.
 
